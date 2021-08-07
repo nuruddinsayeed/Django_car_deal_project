@@ -76,10 +76,19 @@ WSGI_APPLICATION = 'car_deal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# } amarami1234
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'car_deal_db',
+        'USER': 'sayed',
+        'PASSWORD': '1234',
+        'HOST': 'localhost'
     }
 }
 
@@ -125,3 +134,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
     BASE_DIR / 'car_deal/static',
 ]
+
+# Media File
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
