@@ -14,7 +14,8 @@ def index(request):
     data = {
         "teams": get_teams_info(),
         "featured_cars": Car.objects.order_by(
-            '-created_date').filter(is_featured=True)
+            '-created_date').filter(is_featured=True),
+        "latest_cars": Car.objects.order_by('-created_date')[:6]
     }
 
     return render(request, "pages/index.html", data)
