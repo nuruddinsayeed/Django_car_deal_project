@@ -1,21 +1,28 @@
+from cars.models import Car
 from django.shortcuts import render
 from .models import Team
 
 
 def get_teams_info():
-    return {"teams": Team.objects.all()}
+    return Team.objects.all()
 
 
 def index(request):
     """Renders Home page"""
-    data = get_teams_info()
+
+    teams = get_teams_info()
+    data = {
+        "teams": get_teams_info(),
+        "featured_cars": Car.objects.order_by(
+            '-created_date').filter(is_featured=True)
+    }
 
     return render(request, "pages/index.html", data)
 
 
 def about(request):
     "Renders About page"
-    data = get_teams_info()
+    data = {"teams": get_teams_info()}
 
     return render(request, "pages/about.html", data)
 
