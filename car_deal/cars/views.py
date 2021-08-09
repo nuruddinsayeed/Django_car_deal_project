@@ -11,6 +11,7 @@ class CarsView(ListView):
 
     template_name = "cars/cars.html"
     model = Car
+    paginate_by = 2
     context_object_name = 'cars'
     ordering = ['-created_date']
 
