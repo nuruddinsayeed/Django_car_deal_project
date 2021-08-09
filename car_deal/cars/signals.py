@@ -11,7 +11,12 @@ def set_max_price(sender, instance, *args, **kwargs):
         Car object updated or created and here instance is the
         Car instance that is going to be created or updated"""
 
-    if (Car.objects.filter(id=instance.id).exists() or instance.price != 0):
+    if(instance.price == 0):
+        """Reset Max price"""
+        instance.max_price = 0
+        return
+
+    if (Car.objects.filter(id=instance.id).exists()):
         old_price = Car.objects.get(id=instance.id).price
 
         if (old_price > instance.price or instance.max_price > instance.price):
