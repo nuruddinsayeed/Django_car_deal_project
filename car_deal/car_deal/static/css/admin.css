@@ -1,0 +1,57 @@
+#header {
+  height: 50px;
+  background: #512da8;
+  color: aliceblue;
+}
+
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+  color: aliceblue;
+}
+
+div.breadcrumbs {
+  background: #805cd4;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+  background: #512da8;
+}
+
+a:link,
+a:visited {
+  color: #512da8;
+}
+
+#nav-sidebar .current-model {
+  background: #ede7f6;
+}
+#nav-sidebar .current-app .section:link,
+#nav-sidebar .current-app .section:visited {
+  color: aliceblue;
+}
+
+.button.default,
+input[type="submit"].default,
+.submit-row input.default {
+  background: #512da8;
+}
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+  background: #512da8;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover,
+input[type="submit"].default:hover,
+.submit-row input.default:hover,
+.button.default:hover input[type="submit"]:active,
+input[type="button"]:active {
+  background-color: #805cd4;
+}

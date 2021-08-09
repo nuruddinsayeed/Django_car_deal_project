@@ -1,0 +1,22 @@
+{% extends 'admin/base.html' %}
+<!--Load Static-->
+{% load static %}
+
+<!--Edit admin page tempalte body-->
+{% block branding %}
+<a href="{% url 'admin:index' %}">
+  <h1 class="head">
+    <img
+      src="{% static 'img/logos/logo.png' %}"
+      alt="Site Logo"
+      height="50"
+      class="brand_img"
+    />
+  </h1>
+</a>
+{% endblock branding %}
+
+<!--Now inject our cutom style to the style  sheet-->
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}" />
+{% endblock extrastyle %}
