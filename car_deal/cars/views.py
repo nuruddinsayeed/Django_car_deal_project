@@ -15,6 +15,22 @@ class CarsView(ListView):
     context_object_name = 'cars'
     ordering = ['-created_date']
 
+    def get_context_data(self, **kwargs):
+        """customize context data to send search suggestions"""
+
+        context = super().get_context_data(**kwargs)
+
+        context['available_states'] = Car.objects.values_list(
+            'state', flat=True).distinct('state')
+        context['available_years'] = Car.objects.values_list(
+            'year', flat=True).order_by('year').distinct('year')
+        context['available_body_styles'] = Car.objects.values_list(
+            'body_style', flat=True).distinct('body_style')
+        context['available_transmissions'] = Car.objects.values_list(
+            'transmission', flat=True).distinct('transmission')
+
+        return context
+
 
 class CarDetailView(DetailView):
     """Renders Single Car's Detail view Page"""
@@ -31,6 +47,24 @@ class CarSearchResult(ListView):
     # model = Car
     # paginate_by = 3
     context_object_name = 'cars'
+
+    def get_context_data(self, **kwargs):
+        """customize context to provide search opitons"""
+
+        context = super().get_context_data(**kwargs)
+
+        context['available_models'] = Car.objects.values_list(
+            'model', flat=True).distinct('model')
+        context['available_states'] = Car.objects.values_list(
+            'state', flat=True).distinct('state')
+        context['available_years'] = Car.objects.values_list(
+            'year', flat=True).order_by('year').distinct('year')
+        context['available_conditions'] = Car.objects.values_list(
+            'condition', flat=True).distinct('condition')
+        context['available_transmissions'] = Car.objects.values_list(
+            'transmission', flat=True).distinct('transmission')
+
+        return context
 
     def get_queryset(self):
         """Overriding get queryset method"""
@@ -67,6 +101,18 @@ class CarSearchResult(ListView):
 
             if max_price:
                 # here get = greater_that_or_equal lte = less_that_or_equal
-                cars = cars.filter(price__gte=min_price)
+                cars = cars.filter(price__gte=min_price, price__lte=max_price)
+
+        if 'transmission' in self.request.GET:
+            transmission = self.request.GET.get('transmission')
+
+            if transmission:
+                cars = cars.filter(transmission__iexact=transmission)
+
+        if 'condition' in self.request.GET:
+            condition = self.request.GET.get('condition')
+
+            if condition:
+                cars = cars.filter(condition__iexact=condition)
 
         return cars

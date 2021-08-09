@@ -179,7 +179,8 @@
         <div class="sidebar-right">
           <div class="widget advanced-search2">
             <h3 class="sidebar-title">Search your desire car</h3>
-            <form method="GET">
+            <form method="GET" action="{% url 'search' %}">
+              {% comment %}
               <div class="form-group">
                 <select class="selectpicker search-fields" name="brand">
                   <option>Brand</option>
@@ -190,51 +191,49 @@
                   <option>Used</option>
                 </select>
               </div>
+              {% endcomment %}
               <div class="form-group">
-                <select class="selectpicker search-fields" name="location">
-                  <option>Location</option>
-                  <option>United States</option>
-                  <option>United Kingdom</option>
-                  <option>American Samoa</option>
-                  <option>Belgium</option>
-                  <option>Cameroon</option>
-                  <option>Canada</option>
+                <select class="selectpicker search-fields" name="state">
+                  <option selected="true" disabled="disabled">Location</option>
+                  {% for state in available_states %}
+                  <option value="{{ state }}">{{ state }}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="form-group">
                 <select class="selectpicker search-fields" name="year">
-                  <option>Year</option>
-                  <option>2016</option>
-                  <option>2017</option>
-                  <option>2018</option>
-                  <option>2019</option>
-                  <option>2020</option>
+                  <option selected="true" disabled="disabled">Year</option>
+                  {% for year in available_years %}
+                  <option value="{{ year }}">
+                    <!---->
+                    {{ year }}
+                  </option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="form-group">
                 <select class="selectpicker search-fields" name="category">
-                  <option>Category</option>
-                  <option>Luxury Car</option>
-                  <option>Pickup Truck</option>
-                  <option>Minivan</option>
-                  <option>Truck</option>
-                  <option>Sports Car</option>
-                  <option>Wagon</option>
+                  <option selected="true" disabled="disabled">Category</option>
+                  {% for body_style in available_body_styles %}
+                  <option value="{{ body_style }}">{{ body_style }}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="form-group">
                 <select class="selectpicker search-fields" name="transmission">
-                  <option>Transmission</option>
-                  <option>Automatic</option>
-                  <option>Manual</option>
-                  <option>Tiptronic</option>
+                  <option selected="true" disabled="disabled">
+                    Transmission
+                  </option>
+                  {% for transmission in available_transmissions %}
+                  <option value="{{ transmission }}">{{ transmission }}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="range-slider clearfix">
                 <label>Price</label>
                 <div
                   data-min="0"
-                  data-max="150000"
+                  data-max="300000"
                   data-min-name="min_price"
                   data-max-name="max_price"
                   data-unit="USD"
