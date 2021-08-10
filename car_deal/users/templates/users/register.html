@@ -30,6 +30,7 @@
             </a>
           </div>
           <h3>Create an account</h3>
+          {% comment %}
           <form action="#" method="GET">
             <div class="form-group form-box">
               <input
@@ -108,6 +109,47 @@
               </li>
             </ul>
           </form>
+          {% endcomment %}
+          {% include 'includes/messages.html' %}
+          <form
+            method="POST"
+            class="{% if form.errors %}was-validated{% else %} needs-validation {% endif %}"
+            novalidate
+          >
+            {% csrf_token %}
+            <!---->
+            {% for field in form %}
+            <div class="form-group form-box">
+              <!--Form Input-->
+              {{ field }}
+              <!--Error Message-->
+              {{ field.errors }}
+            </div>
+            {% endfor %}
+            <div class="form-group mb-0 clearfix">
+              <button type="submit" class="btn-md btn-theme float-left">
+                Register
+              </button>
+            </div>
+          </form>
+          <div class="extra-login clearfix">
+            <span>Or Login With</span>
+          </div>
+          <div class="clearfix"></div>
+          <ul class="social-list">
+            <li>
+              <a href="#" class="facebook-bg"
+                ><i class="fa fa-facebook facebook-i"></i
+                ><span>Facebook</span></a
+              >
+            </li>
+            <li>
+              <a href="#" class="google-bg"
+                ><i class="fa fa-google google-i"></i><span>Google</span></a
+              >
+            </li>
+          </ul>
+
           <p>
             Already a member?
             <a href="{% url 'login' %}" class="thembo"> Login here</a>
@@ -119,4 +161,33 @@
 </div>
 <!-- Contact section end -->
 
+{% block javascript %}
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>
+{% endblock javascript %}
+<!---->
 {% endblock content %}
