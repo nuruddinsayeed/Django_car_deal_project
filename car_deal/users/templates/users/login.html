@@ -32,7 +32,10 @@
             </a>
           </div>
           <h3>Sign into your account</h3>
-          <form action="#" method="GET">
+          {% include 'includes/messages.html' %}
+
+          <form action="#" method="POST">
+            {% csrf_token %}
             <div class="form-group form-box">
               <input
                 type="email"
@@ -78,7 +81,7 @@
           </form>
           <p>
             Don't have an account?
-            <a href="signup.html" class="thembo"> Register here</a>
+            <a href="{% url 'register' %}" class="thembo"> Register here</a>
           </p>
         </div>
       </div>

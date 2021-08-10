@@ -1,8 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib import messages
 
 
 def login(request):
     """Render Login Template"""
+
+    if request.method == 'POST':
+        messages.error(request, "Something Went wrong")
+
+        return redirect('login')
 
     return render(request, "users/login.html")
 

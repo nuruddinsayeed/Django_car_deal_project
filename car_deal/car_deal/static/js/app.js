@@ -478,3 +478,8 @@ $(function () {
         }
     }).trigger("resize");
 })(jQuery);
+
+// For alert Message
+setTimeout(() => {
+    $("#message").fadeOut("slow");
+}, 3000)
