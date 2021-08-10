@@ -59,3 +59,31 @@ class UserRegForm(forms.ModelForm):
             # raise forms.ValidationError(
             #     "Password and Confirm Password does not match"
             # )
+
+
+class LoginForm(forms.Form):
+    """Create django login form"""
+
+    username = forms.CharField(
+        max_length=150,
+        label="Username",
+        required=True,
+        error_messages={
+            "required": "Name Can not be empty",
+            "max_length": "Please Enter a Shorter Name"
+        },
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Username', 'class': 'form-control'}),
+    )
+
+    password = forms.CharField(
+        max_length=255,
+        label="Password",
+        required=True,
+        error_messages={
+            "required": "Password Can not be empty",
+            "max_length": "Please Enter a Shorter Password"
+        },
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Password', 'class': 'form-control'})
+    )

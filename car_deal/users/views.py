@@ -1,20 +1,38 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.views.generic.edit import CreateView
 
-from .froms import UserRegForm
+from .froms import UserRegForm, LoginForm
 
 
 def login(request):
     """Render Login Template"""
 
     if request.method == 'POST':
-        messages.error(request, "Something Went wrong")
+        form = LoginForm(request.POST)
 
-        return redirect('login')
+        if form.is_valid():
+            data = form.cleaned_data
 
-    return render(request, "users/login.html")
+            # log in user
+            user = auth.authenticate(
+                username=data["username"], password=data["password"])
+
+            if user is not None:
+                messages.success(request, "Successfully Logged In")
+                return redirect('dashboard')
+            messages.error(
+                request, "Login Failed, Please Enter valid Username and password")
+            return redirect('login')
+
+        messages.error(
+            request, "Invalid Input")
+        return render(request, "users/login.html", {"form": form})
+
+    form = LoginForm()
+
+    return render(request, "users/login.html", {"form": form})
 
 
 def register(request):
@@ -30,6 +48,7 @@ class RegistrationView(CreateView):
     form_class = UserRegForm
 
     def get_success_url(self) -> str:
+
         return reverse('login')
 
     def form_valid(self, form):
