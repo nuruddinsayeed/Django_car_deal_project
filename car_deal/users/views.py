@@ -20,6 +20,7 @@ def login(request):
                 username=data["username"], password=data["password"])
 
             if user is not None:
+                auth.login(request, user)
                 messages.success(request, "Successfully Logged In")
                 return redirect('dashboard')
             messages.error(
@@ -35,10 +36,13 @@ def login(request):
     return render(request, "users/login.html", {"form": form})
 
 
-def register(request):
-    """Render register Template"""
-
-    return render(request, "users/register.html")
+def logout(request):
+    """Log Out User"""
+    if request.method == 'POST':
+        auth.logout(request)
+        messages.success(request, "Successfully Logged Out")
+        return redirect('login')
+    return redirect('home')
 
 
 class RegistrationView(CreateView):
