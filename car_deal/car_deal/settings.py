@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = 'dashboard'
+
 
 # Application definition
 
@@ -42,6 +44,14 @@ INSTALLED_APPS = [
 
     'django.contrib.humanize',
     'ckeditor',
+
+    'django.contrib.sites',  # to add social sitesd
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',  # Provider
+    'allauth.socialaccount.providers.google',  # provider
+
 
     'users',
     'pages',
@@ -153,3 +163,6 @@ MEDIA_URL = '/media/'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',  # chere danger is calass name to apply css
 }
+
+# To add social sites via all auth
+SITE_ID = 1
