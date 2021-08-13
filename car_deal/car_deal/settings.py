@@ -52,10 +52,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',  # Provider
     'allauth.socialaccount.providers.google',  # provider
 
-
     'users',
     'pages',
     'cars',
+    'inquiry',
 ]
 
 MIDDLEWARE = [
