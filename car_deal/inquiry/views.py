@@ -10,14 +10,22 @@ def inquiry(request, pk):
     """manages inquiry form submit and save data"""
 
     if request.method == "POST":
+
+        car = Car.objects.get(pk=pk)
         if request.user.is_authenticated:
             user = CustomUser.objects.get(id=request.user.id)
+
+            has_user_query = Inquiry.objects.all().filter(car=car, user=user)
+            if has_user_query:
+                messages.error(request, "You already have a query for this car,\
+                                Please wait for the responce from us")
+                return redirect("car", pk=pk)
+
             name = user.username
         else:
             user = None
             name = request.POST["name"]
         customer_query = request.POST["customer_query"]
-        car = Car.objects.get(pk=pk)
         city = request.POST["city"]
         state = request.POST["state"]
         email = request.POST["email"]
