@@ -14,6 +14,8 @@ from .models import Inquiry
 #             self.fields['somefield'].queryset = Someobject.objects.filter(User=user)
 # ...
 
+# More detail about accessing Request data from Django Form
+# https: // medium.com/analytics-vidhya/django-how-to-pass-the-user-object-into-form-classes-ee322f02948c
 class InquiryForm(forms.ModelForm):
     """Define users Car Inquiry Form"""
 
