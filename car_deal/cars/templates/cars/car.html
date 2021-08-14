@@ -23,6 +23,9 @@
 </div>
 <!-- Sub Banner end -->
 
+<!-- Messages-->
+{% include 'includes/messages.html' %}
+
 <!-- Car details page start -->
 <div class="car-details-page content-area-6">
   <div class="container">
@@ -295,22 +298,36 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form action="#">
+                  <form action="{% url 'inquiry' pk=car.id %}" method="POST">
+                    {% csrf_token %}
                     <div class="form-group">
                       <label for="name" class="col-form-label"
                         >Hello, My Name is</label
                       >
                       <div class="row">
                         <div class="col">
+                        
+                        {% if user.is_authenticated %}
                           <input
-                            type="text"
-                            name="first_name"
-                            class="form-control"
-                            placeholder="First Name"
-                            required
-                          />
+                              type="text"
+                              name="name"
+                              class="form-control"
+                              placeholder="Your Name"
+                              value="{{ user.username }}"
+                              readonly
+                              required
+                            />
+                        {% else %}
+                          <input
+                              type="text"
+                              name="name"
+                              class="form-control"
+                              placeholder="Your Name"
+                              required
+                            />
+                        {% endif %}
                         </div>
-                        <div class="col">
+                        {% comment %} <div class="col">
                           <input
                             type="text"
                             name="last_name"
@@ -318,14 +335,14 @@
                             placeholder="Last Name"
                             required
                           />
-                        </div>
+                        </div> {% endcomment %}
                       </div>
                     </div>
                     <div class="form-group">
                       <select
                         class="form-control"
                         id="sel1"
-                        name="customer_need"
+                        name="customer_query"
                       >
                         <option value="I'm interested in this">
                           I'm interested in this
@@ -349,7 +366,7 @@
                         type="text"
                         name="car_title"
                         class="form-control"
-                        value="LAMBORGHINI HURACÁN."
+                        value="{{ car }}"
                         readonly
                       />
                     </div>

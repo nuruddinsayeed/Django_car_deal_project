@@ -1,7 +1,6 @@
 from cars.models import Car
-from django.db import models
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
 
 from .models import Car
 

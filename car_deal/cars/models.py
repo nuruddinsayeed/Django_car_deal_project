@@ -5,6 +5,8 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from multiselectfield import MultiSelectField
 
+from users.models import CustomUser
+
 
 class Car(models.Model):
     """Create Car Model Database"""

@@ -482,4 +482,4 @@ $(function () {
 // For alert Message
 setTimeout(() => {
     $("#message").fadeOut("slow");
-}, 3000)
+}, 4000)
