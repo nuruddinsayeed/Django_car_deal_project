@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+<!--Load Humanize-->
+{% load humanize %}
 
 {% block title %}Dashboard{% endblock title %}
 <!--Load Content-->
@@ -11,7 +13,7 @@
       <h1>Dashboard</h1>
       <ul class="breadcrumbs">
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li class="active">Username</li>
+        <li class="active">{{ user.username }}</li>
       </ul>
     </div>
   </div>
@@ -22,7 +24,7 @@
 
 <div class="container mt-50 mb-50">
   <div class="main-title" style="text-align: left !important">
-    <h1>Welcome <span>User</span></h1>
+    <h1>Welcome <span>{{ user.username }}</span></h1>
     <p>Here are the cars that you have inquired about</p>
   </div>
   {% include 'includes/messages.html' %}
@@ -37,27 +39,21 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Lamborgini Huracan</td>
-        <td>Austin</td>
-        <td>$25000</td>
-        <td><a href="#" class="btn btn-outline-dark">View Car</a></td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Lamborgini Huracan</td>
-        <td>Austin</td>
-        <td>$25000</td>
-        <td><a href="#" class="btn btn-outline-dark">View Car</a></td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Lamborgini Huracan</td>
-        <td>Austin</td>
-        <td>$25000</td>
-        <td><a href="#" class="btn btn-outline-dark">View Car</a></td>
-      </tr>
+
+      {% if inquiries %}
+        {% for inquiry in inquiries %}
+          <tr>
+            <th scope="row">#</th>
+            <td>{{ inquiry.car.car_title }}</td>
+            <td>{{ inquiry.city }}</td>
+            <td>${{ inquiry.car.price | intcomma }}</td>
+            <td><a href="{% url 'car' inquiry.car.id %}" class="btn btn-outline-dark">View Car</a></td>
+          </tr>
+        {% endfor %}
+      {% else %}   
+      <h3>You don't have any inquiry</h3>
+      {% endif %}
+      
     </tbody>
   </table>
 </div>

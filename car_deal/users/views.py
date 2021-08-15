@@ -1,9 +1,13 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.contrib import messages, auth
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 
 from .froms import UserRegForm, LoginForm
+
+from users.models import CustomUser
+from inquiry.models import Inquiry
 
 
 def login(request):
@@ -67,7 +71,11 @@ class RegistrationView(CreateView):
         return super().form_invalid(form)
 
 
+@login_required(login_url='login')
 def dashboard(request):
     """Render dashboard Template"""
 
-    return render(request, "users/dashboard.html")
+    user_inquiry = Inquiry.objects.order_by(
+        'created_at').filter(user=request.user)
+
+    return render(request, "users/dashboard.html", {'inquiries': user_inquiry})
