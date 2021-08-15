@@ -1,6 +1,11 @@
+from django.views.generic.edit import FormView
+from django.contrib import messages
+from django.core.mail import send_mail
+
 from cars.models import Car
 from django.shortcuts import render
 from .models import Team
+from pages.forms import ContactForm
 
 
 def get_teams_info():
@@ -53,3 +58,37 @@ def contact(request):
     "Renders contact page"
 
     return render(request, "pages/contact.html")
+
+
+class ContactFormView(FormView):
+    """render contact form and send emails"""
+
+    form_class = ContactForm
+    template_name = "pages/contact.html"
+    success_url = "/contact"
+
+    def form_valid(self, form):
+        """Customise to send email succes message"""
+
+        # Now send Email
+        # all Form Data
+        admin_emails = ['nuruddinsayeed@gmail.com', ]
+        name = form.cleaned_data["fullname"]
+        email = form.cleaned_data["email"]
+        subject = form.cleaned_data["subject"]
+        phone = form.cleaned_data["phone"]
+        message = form.cleaned_data["message"]
+
+        mail_body = f'Subject: {subject}, \n\n{message}\n\nUser Email: {email}\nUser Phone:{phone}'
+
+        send_mail(
+            'CarDeal: A new Message From '+name,
+            mail_body,
+            'nuruddinsayeed22@gmail.com',
+            admin_emails,
+            fail_silently=False,
+        )
+
+        messages.success(
+            self.request, "Successfully sent your message. We will try to reply you soon")
+        return super().form_valid(form)

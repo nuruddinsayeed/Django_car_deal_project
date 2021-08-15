@@ -173,6 +173,6 @@ SITE_ID = 1
 # https: // www.google.com/settings/security/lesssecureapps
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'nuruddinsayeed22@gmail.com'
+EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
